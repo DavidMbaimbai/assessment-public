@@ -1,5 +1,9 @@
 package com.xib.assessment;
 
+import com.xib.assessment.entity.Agent;
+import com.xib.assessment.entity.Team;
+import com.xib.assessment.repository.AgentRepository;
+import com.xib.assessment.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,7 +37,7 @@ public class LoadTestData {
         return teamRepository.save(t);
     }
 
-    private Agent createAgent(String firstName, String lastName, String idNumber,  Team team) {
+    private Agent createAgent(String firstName, String lastName, String idNumber, Team team) {
         Agent a = new Agent();
         a.setFirstName(firstName);
         a.setLastName(lastName);

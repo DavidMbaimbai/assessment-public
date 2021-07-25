@@ -1,20 +1,23 @@
-package com.xib.assessment;
+package com.xib.assessment.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import com.xib.assessment.dto.AgentDto;
+
+import javax.persistence.*;
 
 @Entity
 public class Agent {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String firstName;
     private String lastName;
     private String idNumber;
-    @ManyToOne
+    @OneToOne(optional = true)
     private Team team;
+
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "manager")
+    private Manager manager;
 
     public Long getId() {
         return id;
@@ -54,5 +57,19 @@ public class Agent {
 
     public void setIdNumber(String idNumber) {
         this.idNumber = idNumber;
+    }
+
+    public Manager getManager() {
+        return manager;
+    }
+
+    public void setManager(Manager manager) {
+        this.manager = manager;
+    }
+
+    public AgentDto createAgentDto(){
+        AgentDto agentDto = new AgentDto(this.getFirstName(), this.getLastName(),
+                this.getIdNumber(), this.getTeam().createTeamDto(this.getTeam()));
+        return agentDto;
     }
 }
